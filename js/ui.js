@@ -21,16 +21,42 @@ class UI {
     }
 
     initializeTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.setAttribute('data-theme', savedTheme);
-        this.themeSwitch.checked = savedTheme === 'dark';
+        // Check system preference first, then fallback to saved preference or light
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        
+        document.body.setAttribute('data-theme', initialTheme);
+        this.themeSwitch.checked = initialTheme === 'dark';
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) { // Only auto-switch if user hasn't set a preference
+                const newTheme = e.matches ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', newTheme);
+                this.themeSwitch.checked = e.matches;
+            }
+        });
+
+        // Apply initial rotation for dark mode
+        if (initialTheme === 'dark') {
+            document.documentElement.style.setProperty('--bg-transition-duration', '0s');
+            requestAnimationFrame(() => {
+                document.documentElement.style.removeProperty('--bg-transition-duration');
+            });
+        }
     }
 
     toggleTheme() {
         const currentTheme = document.body.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Smoothly transition the theme
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+        
+        // Apply smooth transition for background
+        document.documentElement.style.setProperty('--bg-transition-duration', '0.3s');
     }
 
     clearForm() {

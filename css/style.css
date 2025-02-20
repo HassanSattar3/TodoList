@@ -1,24 +1,29 @@
 :root {
     /* Light theme colors */
     --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
+    --bg-secondary: linear-gradient(to bottom right, #f8f9fa, #f1f2f6);
     --text-primary: #2d3436;
     --text-secondary: #636e72;
     --accent-color: #0984e3;
-    --border-color: #dfe6e9;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: rgba(223, 230, 233, 0.8);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.95);
     --success-color: #00b894;
     --warning-color: #fdcb6e;
     --danger-color: #d63031;
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --bg-transition-duration: 0.3s;
 }
 
 [data-theme="dark"] {
-    --bg-primary: #2d3436;
-    --bg-secondary: #353b48;
+    --bg-primary: #1a1d21;
+    --bg-secondary: linear-gradient(to bottom right, #2d3436, #222831);
     --text-primary: #f5f6fa;
     --text-secondary: #dcdde1;
-    --border-color: #636e72;
-    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: rgba(99, 110, 114, 0.5);
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --card-bg: rgba(45, 52, 54, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -67,47 +72,101 @@ body {
     top: 0;
 }
 
-#theme-switch {
-    display: none;
+/* Theme Toggle Styles */
+.themeToggle {
+    position: relative;
+    cursor: pointer;
+    width: 3em;
 }
 
-.theme-label {
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50px;
-    background: var(--bg-primary);
-    box-shadow: 0 2px 5px var(--shadow-color);
+.st-sunMoonThemeToggleBtn {
     display: inline-block;
 }
 
-.theme-label i {
-    font-size: 1.2rem;
-    transition: 0.3s ease;
+.st-sunMoonThemeToggleBtn .themeToggleInput {
+    opacity: 0;
+    width: 100%;
+    aspect-ratio: 1;
+    display: block;
 }
 
-.fa-sun {
+.st-sunMoonThemeToggleBtn svg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease;
+    transform: rotate(90deg);
     color: var(--warning-color);
 }
 
-.fa-moon {
-    color: var(--text-secondary);
-    display: none;
+[data-theme="dark"] .st-sunMoonThemeToggleBtn svg {
+    color: #dcdde1;
 }
 
-[data-theme="dark"] .fa-sun {
-    display: none;
+.st-sunMoonThemeToggleBtn svg .sunMoon {
+    transform-origin: center center;
+    transition: inherit;
+    transform: scale(0.55);
 }
 
-[data-theme="dark"] .fa-moon {
-    display: inline-block;
+.st-sunMoonThemeToggleBtn svg .sunRay {
+    transform-origin: center center;
+    transform: scale(1);
+}
+
+.st-sunMoonThemeToggleBtn svg mask > circle {
+    transition: transform 0.64s cubic-bezier(0.41, 0.64, 0.32, 1.575);
+    transform: translate(16px, -3px);
+}
+
+.st-sunMoonThemeToggleBtn svg .sunRay2 {
+    animation-delay: 0.05s !important;
+}
+.st-sunMoonThemeToggleBtn svg .sunRay3 {
+    animation-delay: 0.1s !important;
+}
+.st-sunMoonThemeToggleBtn svg .sunRay4 {
+    animation-delay: 0.17s !important;
+}
+.st-sunMoonThemeToggleBtn svg .sunRay5 {
+    animation-delay: 0.25s !important;
+}
+.st-sunMoonThemeToggleBtn svg .sunRay6 {
+    animation-delay: 0.29s !important;
+}
+
+.st-sunMoonThemeToggleBtn .themeToggleInput:checked + svg {
+    transform: rotate(40deg);
+}
+.st-sunMoonThemeToggleBtn .themeToggleInput:checked + svg mask > circle {
+    transform: translate(0px, 0px);
+}
+.st-sunMoonThemeToggleBtn .themeToggleInput:checked + svg .sunMoon {
+    transform: scale(1);
+}
+.st-sunMoonThemeToggleBtn .themeToggleInput:checked + svg .sunRay {
+    transform: scale(0);
+}
+
+@keyframes showRay1832 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .todo-form {
-    background: var(--bg-primary);
+    background: var(--card-bg);
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px var(--shadow-color);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px var(--shadow-color);
     margin-bottom: 2rem;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .input-group {
@@ -180,14 +239,23 @@ select:focus {
 }
 
 .todo-item {
-    background: var(--bg-primary);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    background: var(--card-bg);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--shadow-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
     animation: slideIn 0.3s ease;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow-color);
 }
 
 .todo-item.completed {
@@ -212,10 +280,17 @@ select:focus {
     padding: 0.5rem;
     border-radius: 5px;
     transition: all 0.2s ease;
+    color: var(--text-secondary);
 }
 
-.todo-actions button:hover {
-    background: var(--bg-secondary);
+.todo-actions .edit-btn:hover {
+    background: var(--success-color);
+    color: white;
+}
+
+.todo-actions .delete-btn:hover {
+    background: var(--danger-color);
+    color: white;
 }
 
 .priority-badge {
@@ -245,8 +320,14 @@ select:focus {
     color: var(--text-secondary);
 }
 
-.social-links {
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
     margin-top: 1rem;
+    margin-left: -2rem;
+    padding: 0.5rem;
 }
 
 .social-links a {
@@ -257,6 +338,21 @@ select:focus {
 
 .social-links a:hover {
     color: var(--accent-color);
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.theme-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.themeToggle {
+    width: 2em;
 }
 
 @keyframes slideIn {
@@ -346,17 +442,35 @@ select:focus {
     opacity: 1;
 }
 
+.st-sunMoonThemeToggleBtn svg .sunRay {
+    transform-origin: center center;
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+[data-theme="dark"] .st-sunMoonThemeToggleBtn svg .sunRay {
+    opacity: 0;
+}
+
 @media (max-width: 768px) {
     .input-group {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
     
     .filters {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
     
     .app-container {
-        padding: 1rem;
+        padding: 1.25rem;
+        max-width: 100%;
+    }
+
+    .todo-form {
+        padding: 1.5rem;
     }
 
     .notification {
@@ -364,4 +478,79 @@ select:focus {
         right: 20px;
         text-align: center;
     }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    .add-btn {
+        height: 3.25rem;
+        font-size: 1.1rem;
+    }
+
+    .todo-item {
+        padding: 1.5rem;
+    }
+
+    .app-header {
+        margin-bottom: 2rem;
+    }
+
+    .app-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Enhanced inputs */
+input[type="text"],
+input[type="date"],
+select {
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.15);
+}
+
+.add-btn {
+    background: linear-gradient(45deg, var(--accent-color), #74b9ff);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3);
+}
+
+.add-btn:active {
+    transform: translateY(0);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: color var(--bg-transition-duration) ease;
+    min-height: 100vh;
+    background-size: 200% 200%;
+    background-position: 0% 0%;
 }

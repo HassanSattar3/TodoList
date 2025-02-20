@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskMaster | By Hassan Sattar</title>
+    <title>Task List | By Hassan Sattar</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0984e3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Task List">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
 <body>
     <div class="app-container">
         <header class="app-header">
-            <div class="theme-toggle">
-                <input type="checkbox" id="theme-switch">
-                <label for="theme-switch" class="theme-label">
-                    <i class="fas fa-sun"></i>
-                    <i class="fas fa-moon"></i>
-                </label>
-            </div>
-            <h1>TaskMaster</h1>
+            <h1>Task List</h1>
             <p class="subtitle">By Hassan Sattar</p>
         </header>
 
@@ -65,11 +66,33 @@
         </div>
 
         <footer class="app-footer">
-            <p>Created with 💻 by Hassan Sattar</p>
-            <div class="social-links">
-                <a href="https://github.com/HassanSattar3" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i>
-                </a>
+            <p>Created by Hassan Sattar</p>
+            <div class="footer-content">
+                <div class="theme-toggle">
+                    <label for="theme-switch" class="themeToggle st-sunMoonThemeToggleBtn">
+                        <input type="checkbox" id="theme-switch" class="themeToggleInput">
+                        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" stroke="none">
+                            <mask id="moon-mask">
+                                <rect x="0" y="0" width="20" height="20" fill="white"></rect>
+                                <circle cx="11" cy="3" r="8" fill="black"></circle>
+                            </mask>
+                            <circle class="sunMoon" cx="10" cy="10" r="8" mask="url(#moon-mask)"></circle>
+                            <g>
+                                <circle class="sunRay sunRay1" cx="18" cy="10" r="1.5"></circle>
+                                <circle class="sunRay sunRay2" cx="14" cy="16.928" r="1.5"></circle>
+                                <circle class="sunRay sunRay3" cx="6" cy="16.928" r="1.5"></circle>
+                                <circle class="sunRay sunRay4" cx="2" cy="10" r="1.5"></circle>
+                                <circle class="sunRay sunRay5" cx="6" cy="3.1718" r="1.5"></circle>
+                                <circle class="sunRay sunRay6" cx="14" cy="3.1718" r="1.5"></circle>
+                            </g>
+                        </svg>
+                    </label>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/HassanSattar3" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
             </div>
         </footer>
     </div>
@@ -77,5 +100,19 @@
     <script src="js/storage.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
