@@ -16,7 +16,7 @@ A modern, responsive Todo List application built with vanilla JavaScript. This p
 
 ## Live Demo
 
-Visit the live demo: [TaskMaster](https://hassansattar3.github.io/TodoList/)
+Visit the live demo: [TaskList](https://hassansattar3.github.io/TodoList/)
 
 ## Technologies Used
 
@@ -52,7 +52,7 @@ Visit the live demo: [TaskMaster](https://hassansattar3.github.io/TodoList/)
 
 ## About the Developer
 
-Created with 💻 by [Hassan Sattar](https://github.com/HassanSattar3)
+Created by [Hassan Sattar](https://github.com/HassanSattar3)
 
 ## License
 
