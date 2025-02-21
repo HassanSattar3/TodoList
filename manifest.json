@@ -2,7 +2,7 @@
   "name": "Task List",
   "short_name": "Tasks",
   "description": "A simple and elegant task management application",
-  "start_url": "/",
+  "start_url": "/TodoList/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0984e3",
