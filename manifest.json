@@ -5,7 +5,7 @@
   "start_url": "/TodoList/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0984e3",
+  "theme_color": "#ffffff",
   "orientation": "any",
   "icons": [
     {

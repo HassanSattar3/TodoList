@@ -6,7 +6,10 @@
     --text-secondary: #636e72;
     --accent-color: #0984e3;
     --border-color: rgba(223, 230, 233, 0.8);
-    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.08); /* Existing general shadow */
+    --shadow-card-form: 0 4px 12px rgba(0,0,0,0.08); /* New shadow for form card */
+    --shadow-card-item: 0 2px 6px rgba(0,0,0,0.06);   /* New shadow for item card */
+    --shadow-card-item-hover: 0 4px 12px rgba(0,0,0,0.08); /* Shadow for item card on hover */
     --card-bg: rgba(255, 255, 255, 0.95);
     --success-color: #00b894;
     --warning-color: #fdcb6e;
@@ -21,7 +24,10 @@
     --text-primary: #f5f6fa;
     --text-secondary: #dcdde1;
     --border-color: rgba(99, 110, 114, 0.5);
-    --shadow-color: rgba(0, 0, 0, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.2); /* Existing general shadow for dark theme */
+    --shadow-card-form: 0 4px 12px rgba(0,0,0,0.15); /* New shadow for form card in dark */
+    --shadow-card-item: 0 2px 6px rgba(0,0,0,0.12);   /* New shadow for item card in dark */
+    --shadow-card-item-hover: 0 4px 12px rgba(0,0,0,0.18); /* Shadow for item card on hover in dark */
     --card-bg: rgba(45, 52, 54, 0.95);
     --glass-border: rgba(255, 255, 255, 0.1);
 }
@@ -32,14 +38,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    transition: background-color 0.3s ease;
-}
-
 .app-container {
     max-width: 900px;
     margin: 0 auto;
@@ -48,22 +46,24 @@ body {
 
 .app-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem; /* Adjusted margin */
     position: relative;
 }
 
 .app-header h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem; /* Reduced font size */
+    font-weight: 700; /* Ensure header is bold */
     margin-bottom: 0.5rem;
     background: linear-gradient(45deg, var(--accent-color), #74b9ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: gradientShift 5s ease infinite;
+    animation: gradientShift 5s ease infinite; /* Restored animation */
 }
 
 .subtitle {
     color: var(--text-secondary);
-    font-size: 1rem;
+    font-size: 0.9rem; /* Adjusted font size */
+    font-weight: 400; /* Ensure subtitle is not too bold */
 }
 
 .theme-toggle {
@@ -161,12 +161,12 @@ body {
 .todo-form {
     background: var(--card-bg);
     padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px var(--shadow-color);
+    border-radius: 20px; /* Updated border-radius to 20px */
+    box-shadow: var(--shadow-card-form); /* Updated shadow */
     margin-bottom: 2rem;
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* border: 1px solid var(--glass-border); */ /* Removed for cleaner look */
+    /* backdrop-filter: blur(10px); */ /* Removed for cleaner look */
+    /* -webkit-backdrop-filter: blur(10px); */ /* Removed for cleaner look */
 }
 
 .input-group {
@@ -176,6 +176,8 @@ body {
     align-items: center;
 }
 
+/* The styles below were overridden by the "Enhanced inputs" section later in the file. */
+/*
 input[type="text"],
 input[type="date"],
 select {
@@ -195,6 +197,7 @@ select:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.1);
 }
+*/
 
 .add-btn {
     background: var(--accent-color);
@@ -241,21 +244,21 @@ select:focus {
 .todo-item {
     background: var(--card-bg);
     padding: 1.25rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px var(--shadow-color);
+    border-radius: 16px; /* Updated border-radius */
+    box-shadow: var(--shadow-card-item); /* Updated shadow */
     display: flex;
     justify-content: space-between;
     align-items: center;
     animation: slideIn 0.3s ease;
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* border: 1px solid var(--glass-border); */ /* Removed for cleaner look */
+    /* backdrop-filter: blur(10px); */ /* Removed for cleaner look */
+    /* -webkit-backdrop-filter: blur(10px); */ /* Removed for cleaner look */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .todo-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px var(--shadow-color);
+    box-shadow: var(--shadow-card-item-hover); /* Use defined hover shadow */
 }
 
 .todo-item.completed {
@@ -266,6 +269,33 @@ select:focus {
     display: flex;
     align-items: center;
     gap: 1rem;
+    align-items: flex-start; /* Align items to the start for better checkbox alignment with multi-line text */
+}
+
+.todo-checkbox {
+    width: 1.25em; /* Custom size */
+    height: 1.25em; /* Custom size */
+    accent-color: var(--accent-color); /* Color the checkmark */
+    cursor: pointer;
+    margin-top: 0.15em; /* Fine-tune vertical alignment with text */
+}
+
+/* Styles for the main text of a todo item */
+.todo-text {
+    font-weight: 500; /* Make task text slightly bolder */
+    color: var(--text-primary);
+    margin-bottom: 0.25rem; /* Add a small margin if due date is present */
+}
+
+.todo-text.completed-text {
+    text-decoration: line-through;
+    color: var(--text-secondary); /* Mute color for completed tasks */
+}
+
+/* Styles for the due date of a todo item */
+.due-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
 .todo-actions {
@@ -278,7 +308,7 @@ select:focus {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 5px;
+    border-radius: 10px; /* Changed to 10px */
     transition: all 0.2s ease;
     color: var(--text-secondary);
 }
@@ -295,8 +325,9 @@ select:focus {
 
 .priority-badge {
     padding: 0.2rem 0.5rem;
-    border-radius: 3px;
+    border-radius: 8px; /* Changed to 8px */
     font-size: 0.8rem;
+    font-weight: 500; /* Ensure text is legible */
 }
 
 .priority-high {
@@ -324,9 +355,9 @@ select:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 2rem; /* Reduced gap */
     margin-top: 1rem;
-    margin-left: -2rem;
+    /* margin-left: -2rem; */ /* Removed unnecessary negative margin */
     padding: 0.5rem;
 }
 
@@ -390,7 +421,7 @@ select:focus {
 .cancel-edit-btn {
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px; /* Changed to 12px */
     cursor: pointer;
     margin: 0.5rem 0.5rem 0.5rem 0;
     transition: all 0.3s ease;
@@ -424,7 +455,7 @@ select:focus {
     bottom: 20px;
     right: 20px;
     padding: 1rem 2rem;
-    border-radius: 5px;
+    border-radius: 12px; /* Changed to 12px */
     background: var(--success-color);
     color: white;
     transform: translateY(100px);
@@ -505,8 +536,8 @@ input[type="text"],
 input[type="date"],
 select {
     padding: 0.8rem 1rem;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
+    border: 1px solid var(--border-color); /* Changed to 1px */
+    border-radius: 12px; /* Changed to 12px */
     font-size: 1rem;
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -522,11 +553,11 @@ select:focus {
 }
 
 .add-btn {
-    background: linear-gradient(45deg, var(--accent-color), #74b9ff);
+    background: var(--accent-color); /* Changed to solid color */
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 12px; /* Changed to 12px */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -546,10 +577,12 @@ select:focus {
 
 body {
     font-family: 'Inter', sans-serif;
-    background: var(--bg-secondary);
+    font-size: 16px; /* Base font size */
+    font-weight: 400; /* Base font weight for body */
+    background: var(--bg-secondary); /* Intentionally using background shorthand for gradient */
     color: var(--text-primary);
-    line-height: 1.6;
-    transition: color var(--bg-transition-duration) ease;
+    line-height: 1.6; /* Generous line-height */
+    transition: background var(--bg-transition-duration) ease, color var(--bg-transition-duration) ease; /* Combined transitions */
     min-height: 100vh;
     background-size: 200% 200%;
     background-position: 0% 0%;
